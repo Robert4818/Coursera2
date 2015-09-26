@@ -1,0 +1,58 @@
+library(ggplot2)
+library(reshape2)
+library(plyr)
+
+#loads the three department files from data directory
+deptA <- read.csv(file="data/DeptAData.csv", header=TRUE, sep=",")
+deptB <- read.csv(file="data/DeptBData.csv", header=TRUE, sep=",")
+deptC <- read.csv(file="data/DeptCData.csv", header=TRUE, sep=",")
+
+#labels the departments by name
+deptA$dept <- "Department A"
+deptB$dept <- "Department B"
+deptC$dept <- "Department C"
+
+#merges the three departments into one dataset
+deptData <- rbind(deptA, deptB, deptC)
+
+#de-pivots the data for use in the TY/LY line chart
+deptData2 <- melt(deptData, id.vars=c("dept","Week"))
+names(deptData2)[names(deptData2)=="variable"] <- "Year"
+
+
+shinyServer(
+  function(input, output) {
+    
+#Filters our data frames to the chosen department
+    chosenDept <- reactive({
+                  input$var
+                  })
+    tmp.data <-reactive({
+                  deptData[identical(deptData$dept, chosenDept()),]
+                  })
+    tmp2.data <-reactive({
+                  deptData2[identical(deptData2$dept,chosenDept()),]
+                  })
+   
+    
+
+    
+    output$TYLY <- renderPlot({
+            ggplot(data=deptData2[deptData2$dept==chosenDept(),], aes(x=Week, y=value)) + 
+              geom_line(aes(colour = Year)) +
+              theme(legend.position="bottom")
+        })
+    
+    output$diffFromLY <- renderPlot ({
+
+      
+            ggplot(data=deptData[deptData$dept==chosenDept(),], aes(x=Week, y=TY-LY)) + 
+              geom_hline(aes(yintercept=0),linetype="dashed")+
+              geom_line(colour="blue")
+              
+      
+        }) 
+   
+    
+    })
+  
