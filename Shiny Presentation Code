@@ -1,0 +1,40 @@
+Coursera Project Presentation
+========================================================
+author: Robert Richardson
+date: 9/25/2015
+
+Why make this app?
+========================================================
+Our merchant team would love to be able to track aged merchandise for clearance events.
+
+- Track the inventory of aged inventory of dozens of merchandise departments
+- Compare the inventory to that from the previous year
+
+Two different plots
+========================================================
+
+- The first plot creates a dual line graph to compare the inventory this year to the inventory last year of a specific department.
+
+- The second plot calculates the difference between TY and LY to let us know how we are doing in comparison to the previous year.
+
+For example:
+```{r}
+paste("WK 20 LY: 157,342, TY: 155,961 for Department A.  ", 157342-155961, "Units behind this point last year." )
+```
+
+Dummy Data?
+========================================================
+
+
+- The shiny app uses dummy data for sensitive information.
+- Dummy data was generated in excel
+- A random starting inventory was generated, the end goal was set to 30% of that inventory.
+- The data was then decreased by a random amount for both the TY and LY data.
+
+Final Thoughts?
+========================================================
+
+- I work as part of the analytics team at my company
+- Shiny and Slidify show great potential for delivering reports to the stakeholders
+
+
