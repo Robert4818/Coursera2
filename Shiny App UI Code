@@ -1,0 +1,36 @@
+# ui.R
+
+shinyUI(fluidPage(
+  titlePanel("Aged Products Trends"),
+  
+  sidebarLayout(
+    sidebarPanel(
+      helpText("Aged Products by Department"),
+      
+      selectInput("var", 
+                  label = "Choose a Department to Display",
+                  choices = c("Department A", 
+                              "Department B",
+                              "Department C" ),
+                  selected = "Department A"),
+#I placed this chart into the sidebar panel to get a side by side instance of graphs
+      h2("Trends for This Year and Last Year",
+         plotOutput("TYLY"),align = "center"),
+    width = 6
+      
+    ),
+    
+    mainPanel(
+      #lines up the two graphs (Manually)
+              br(),
+              br(),
+              br(),
+              br(),
+              br(),
+              br(),
+              h2("Difference From LY", align = "center"),
+              plotOutput("diffFromLY"),
+    width = 6
+            )
+  )
+))
